@@ -3,15 +3,10 @@ module.exports = (sequelize, DataTypes) => {
   var Banner = sequelize.define('Banner', {
     source: DataTypes.STRING,
     description: DataTypes.STRING,
-/*    topicId: {
+    topicId: {
         type: DataTypes.INTEGER,
-        onDelete: "CASCADE",
-        references: {
-          model: "Topic",
-          key: "id",
-          as: "topicId",
-      }
-    }*/
+        allowNull: false,
+    }
   }, {});
   Banner.associate = function(models) {
     // associations can be defined here
