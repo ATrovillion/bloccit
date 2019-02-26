@@ -13,7 +13,7 @@ describe ("Post", () => {
 
             Topic.create({
                 title: "Expeditions to Alpha Centauri",
-                description: "A compilation of reports from recent visits to the stary system."
+                description: "A compilation of reports from recent visits to the star system."
             })
             .then((topic) => {
                 this.topic = topic;
