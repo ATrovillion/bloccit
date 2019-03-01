@@ -21,11 +21,8 @@ describe("Topic", () => {
             })
             .then((topic) => {
                 this.topic = topic;
-            })
-            .catch((err) => {
-                console.log(err);
-                done();
-            });
+
+
 
                 Post.create({
                     title: "My first visit to Proxima Centauri b",
@@ -53,16 +50,17 @@ describe("Topic", () => {
                 title: "This is my topic title",
                 description: "It's a nice topic"
             })
-        })
-        .then((topic) => {
+            .then((topic) => {
 
-            expect(topic.title).toBe("This is my topic title");
-            expect(topic.description).toBe("It's a nice topic");
-            done();
-        })
-        .catch((err) => {
-            console.log(err);
-            done();
+                expect(topic.title).toBe("This is my topic title");
+                expect(topic.description).toBe("It's a nice topic");
+                done();
+            })
+            .catch((err) => {
+                console.log(err);
+                done();
+            });
+
         });
 
         it("should not create a topic with missing title or description", (done) => {
@@ -70,7 +68,7 @@ describe("Topic", () => {
             Topic.create({
                 title: "This is my topic title",
             })
-            .then((post) => {
+            .then((topic) => {
 
                 done();
             })
@@ -78,8 +76,9 @@ describe("Topic", () => {
 
                 expect(err.message).toContain("Topic.body cannot be null");
                 expect(err.message).toContain("Topic.id cannot be null");
+                done();
             })
-        })
+        });
     });
 
     describe("#getPosts()", () => {
@@ -91,22 +90,25 @@ describe("Topic", () => {
                 body: "It has lots of information",
                 topicId: this.topic.id
             })
-            .then((post) => {
+            .then((newPost) => {
 
                 expect(post.title).toBe("This is a new test post");
                 expect(post.body).toBe("It has lots of information");
+                expect(post.topicId).toBe(this.topic.id)
                 done()
             })
-            .catch((err) => {
-                console.log(err);
-                done();
-            });
         })
-    })
- 
+
+        it("should return associated posts", (done) => {
+
+            this.topic.getPosts()
+            .then((associatedPosts) => {
+                expect(associatedPosts.title).toBe("This is a new test post");
+                expect(associatedPosts.body).toBe("It has lots of information");
+                done();
+            })
+        })
+    });
+
 });
 
-//Test for getPosts() method
-    //create and associate post with topic in scope
-    //returns array of Post objects associated with the topic the getPosts() method was called on
-    //confirm that associated post is returned when getPosts() method is called
